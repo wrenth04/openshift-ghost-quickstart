@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>Openshift-ghost-quickstart by wrenth04</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">Openshift-ghost-quickstart</h1>
+      <h2 class="project-tagline">Ghost blog QuickStart for the OpenShift platform</h2>
+      <a href="https://github.com/wrenth04/openshift-ghost-quickstart" class="btn">View on GitHub</a>
+      <a href="https://github.com/wrenth04/openshift-ghost-quickstart/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/wrenth04/openshift-ghost-quickstart/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
+
+    <section class="main-content">
+      <h1>
+<a id="ghost-for-openshift" class="anchor" href="#ghost-for-openshift" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Ghost for OpenShift</h1>
+
+<p>Ghost is a free, open, simple blogging platform that is available to anyone who wants to use it. </p>
+
+<p>Visit the project's website at <a href="http://ghost.org">http://ghost.org</a> • docs on <a href="http://support.ghost.org">http://support.ghost.org</a>.</p>
+
+<h2>
+<a id="running-ghost-on-openshift" class="anchor" href="#running-ghost-on-openshift" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Running Ghost on OpenShift</h2>
+
+<p>The easiest way to deploy Ghost on OpenShift is to use the <a href="https://hub.openshift.com/quickstarts/119-ghost-0-5-10">QuickStart on the OpenShift Hub</a>.</p>
+
+<p>Note these OpenShift specific changes:</p>
+
+<ol>
+<li><p>The content/data and content/images directories have been removed.  They are created on the server and symlinked to your $OPENSHIFT_DATA_DIR so that posts and uploaded images will persist across 'git pushes'</p></li>
+<li><p>Even though the Node.js cartridge itself is scalable, this application will not play nice with scaling right now because the images are stored on disk, and since OpenShift does not currently support shared physical disk storage across scaled gears, this cartridge will not scale.  We are working on a solution for this.</p></li>
+<li><p>This quickstart is setup to use MySQL (5.1 or 5.5) or PostgreSQL (8.4 or 9.2).  Once you click the Deploy link on the OpenShift Hub, you can choose which database you would like to use.</p></li>
+<li><p>If you use a custom domain, modify the production url field in the config.js file.</p></li>
+</ol>
+
+<h3>
+<a id="upgrading-to-the-latest-version" class="anchor" href="#upgrading-to-the-latest-version" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Upgrading to The Latest Version</h3>
+
+<p>Upgrading from the older version of this repo <code>&lt; 0.5.7</code> requires extra steps. You'll notice there is no longer <code>./core</code>, that is because this repo now depends on <code>ghost</code> which lives in <code>./node_modules/ghost</code>. </p>
+
+<ol>
+<li>Delete <code>./core</code>
+</li>
+<li>Delete <code>./package.json</code> &amp; <code>./index.js</code>
+</li>
+<li>
+<code>./Gruntfile.js</code> &amp; <code>./bower.json</code> are unnecessary because they are handled by the external <code>ghost</code> dependency and can be removed.</li>
+<li>Copy the following files to the root: <code>./Makefile</code>, <code>./index.js</code>, <code>./package.json</code>
+</li>
+<li>Make a copy of your <code>./config.js</code> because you'll need to copy that over but you don't want to overwrite it.</li>
+<li>Copy <code>./config.js</code> to the root.</li>
+<li>Modify <code>./config.js</code> so it uses your configuration variables, I.E. <code>mail {...}</code> and <code>url</code>.</li>
+<li>Run <code>npm install --production</code>
+</li>
+<li>
+<code>push</code> your updates.</li>
+</ol>
+
+<p>If you are upgrading from <code>&gt;= 0.5.7</code> then in most cases all you need to do is run <code>npm update</code> in root directory. There are 2 things you should be aware of while upgrading your blog:</p>
+
+<ol>
+<li><p>RedHat OpenShift runs on Linux x64 platform. If you are running <code>npm update</code> on any other plaform (e.g. Linux x32 or Mac) you will need to make sure you have <code>node_modules/ghost/node_modules/sqlite3/lib/binding/node-v11-linux-x64/node_sqlite3.node</code> in place.</p></li>
+<li><p>If you are using default theme Casper you will need to update its code manually with following command: <code>cp -r node_modules/ghost/content/themes/casper/ content/themes/</code>. Note: this will override all custom modifications that you did in the theme.</p></li>
+</ol>
+
+<p>More information can be found on the <a href="http://support.ghost.org/how-to-upgrade/">Ghost Support Site</a></p>
+
+<h3>
+<a id="logging-in-for-the-first-time" class="anchor" href="#logging-in-for-the-first-time" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Logging in For The First Time</h3>
+
+<p>Once you have the Ghost server up and running, you should be able to navigate to <code>http://&lt;your-website&gt;/ghost/</code> from a web browser, where you will be prompted to register a new user. Once you have entered your desired credentials you will be automatically logged in to the admin area.</p>
+
+<h2>
+<a id="copyright--license" class="anchor" href="#copyright--license" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Copyright &amp; License</h2>
+
+<p>Copyright (c) 2013-2015 Ghost Foundation - Released under the <a href="LICENSE">MIT license</a>.</p>
+
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/wrenth04/openshift-ghost-quickstart">Openshift-ghost-quickstart</a> is maintained by <a href="https://github.com/wrenth04">wrenth04</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
+
+  
+  </body>
+</html>
