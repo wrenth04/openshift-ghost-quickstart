@@ -7,8 +7,8 @@ create_app() {
 
 setup_app() {
   rhc ssh $appName <<EOF
-bash <(curl -s https://wrenth04.github.com/openshift-ghost-quickstart/bin/setup)
-exit
+date
+wget -q -O - https://wrenth04.github.com/openshift-ghost-quickstart/bin/setup | bash
 EOF
 }
 
