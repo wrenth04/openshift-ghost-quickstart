@@ -1,6 +1,6 @@
 #!/bin/bash
 
-DRIVE_CMD="${HOME}app-root/data/drive -c ${HOME}app-root/data/drive.conf"
+DRIVE_CMD="${HOME}app-root/data/gdrive -c ${HOME}app-root/data/drive.conf"
 TIME=$(date "+%Y%m%d%H%M")
 
 $DRIVE_CMD upload --name "blog-ghost-$TIME.db" -p "SET_FOLDER_ID" ${HOME}app-root/data/ghost.db

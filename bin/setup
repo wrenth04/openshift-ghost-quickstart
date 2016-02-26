@@ -5,14 +5,13 @@ cd ${HOME}app-root/data
 wget -q -O - https://wrenth04.github.com/openshift-ghost-quickstart/backup.tar.gz | tar xvz
 
 echo "setup google drive..."
-echo "please open your browser and log google account."
-./gdrive -c gdrive.conf version
+./gdrive -c gdrive.conf about 
 
-echo "please create an backup folder in google drive."
+echo "please create an folder for backup in google drive."
 echo "please entern folderId:"
 read folderId
 
-sed backup.sample "s/SET_FOLDER_ID/$folderId/" > backup
+sed "s/SET_FOLDER_ID/$folderId/" backup.sample > backup
 chmod a+x backup
 
 echo "test first backup.."
