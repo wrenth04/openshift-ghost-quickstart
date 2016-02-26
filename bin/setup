@@ -2,7 +2,7 @@
 
 cd ${HOME}app-root/data
 
-wget -q -O - https://wrenth04.github.com/openshift-ghost-quickstart/backup.tar.gz | tar xvf
+wget -q -O - https://wrenth04.github.com/openshift-ghost-quickstart/backup.tar.gz | tar xv
 
 echo "setup google drive..."
 echo "please open your browser and log google account."
