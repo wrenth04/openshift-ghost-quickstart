@@ -1,0 +1,19 @@
+#!/bin/bash
+
+create_app() {
+  rhc app-create $appName nodejs-0.10 cron-1.4 --from-code https://github.com/wrenth04/openshift-ghost-quickstart.git  
+  rhc env set TZ="Asus/Taipei" $appName
+}
+
+setup_app() {
+  rhc ssh $appName <<EOF
+bash <(curl -s https://wrenth04.github.com/openshift-ghost-quickstart/bin/setup)
+exit
+EOF
+}
+
+echo "Please enter app name:"
+read appName
+
+#create_app
+setup_app
